@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // Yahan apni English sub modules screen ko import kar lein ge jab ban jayegi:
 import '../../modules/english_sub_modules_screen.dart';
 import '../../modules/body_parts_screen.dart';
+import 'package:kids_learning_app/features/modules/shapes_and_colors_screen.dart';
 class LearnScreen extends StatelessWidget {
   const LearnScreen({Key? key}) : super(key: key);
 
@@ -237,18 +238,28 @@ GestureDetector(
 ),
 
                     // 5. Shapes & Colors
-                    _buildModuleCard(
-                      bgColor: const Color(0xFFFFDAD6).withOpacity(0.5),
-                      shadowColor: const Color(0xFFBA1A1A),
-                      topBadgeWidget: const Icon(Icons.category, color: Color(0xFFBA1A1A), size: 22),
-                      title: 'Shapes & Colors',
-                      subtitle: 'Rainbow Palette',
-                      imagePath: 'assets/images/shapes_mod.jpg',
-                      iconColor: const Color(0xFFBA1A1A),
-                      buttonColor: const Color(0xFFBA1A1A),
-                      onAudioTap: () {},
-                    ),
+                   
 
+_buildModuleCard(
+  bgColor: const Color(0xFFFFDAD6).withOpacity(0.5),
+  shadowColor: const Color(0xFFBA1A1A),
+  topBadgeWidget: const Icon(Icons.category, color: Color(0xFFBA1A1A), size: 22),
+  title: 'Shapes & Colors',
+  subtitle: 'Rainbow Palette',
+  imagePath: 'assets/images/shapes_mod.jpg',
+  iconColor: const Color(0xFFBA1A1A),
+  buttonColor: const Color(0xFFBA1A1A),
+  onAudioTap: () {},
+  onTap: () {
+    print("Shapes & Colors card tapped!");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ShapesAndColorsScreen(),
+      ),
+    );
+  },
+),
                     // 6. Islamic Learning
                     _buildModuleCard(
                       bgColor: const Color(0xFF53DF8A).withOpacity(0.25),
@@ -381,129 +392,143 @@ GestureDetector(
     required Color buttonColor,
     bool isRtl = false,
     required VoidCallback onAudioTap,
+    VoidCallback? onTap,
   }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor,
-            offset: const Offset(0, 5),
-            blurRadius: 0,
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 34,
-                height: 34,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
-                      blurRadius: 4,
-                    ),
-                  ],
-                ),
-                alignment: Alignment.center,
-                child: topBadgeWidget ??
-                    Text(
-                      topBadgeText ?? '',
-                      style: TextStyle(
-                        fontFamily: 'Rubik',
-                        fontSize: 13,
-                        fontWeight: FontWeight.w900,
-                        color: iconColor,
-                      ),
-                    ),
-              ),
-              InkWell(
-                onTap: onAudioTap,
-                child: Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    color: buttonColor,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.volume_up, color: Colors.white, size: 15),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: shadowColor,
+              offset: const Offset(0, 5),
+              blurRadius: 0,
+            ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(24),
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(24),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6.0),
-              child: Center(
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 6,
-                        offset: const Offset(0, 2),
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.04),
+                              blurRadius: 4,
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.center,
+                        child: topBadgeWidget ??
+                            Text(
+                              topBadgeText ?? '',
+                              style: TextStyle(
+                                fontFamily: 'Rubik',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w900,
+                                color: iconColor,
+                              ),
+                            ),
+                      ),
+                      InkWell(
+                        onTap: onAudioTap,
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: buttonColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.volume_up, color: Colors.white, size: 15),
+                        ),
                       ),
                     ],
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      imagepath_or_placeholder(imagePath),
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6.0),
+                      child: Center(
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.08),
+                                blurRadius: 6,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Image.asset(
+                              imagepath_or_placeholder(imagePath),
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Directionality(
+                    textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontFamily: 'Rubik',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFF1B1C19),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 1),
+                        Text(
+                          subtitle,
+                          style: TextStyle(
+                            fontFamily: 'Nunito Sans',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            color: iconColor,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          Directionality(
-            textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontFamily: 'Rubik',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w900,
-                    color: Color(0xFF1B1C19),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 1),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontFamily: 'Nunito Sans',
-                    fontSize: 10,
-                    fontWeight: FontWeight.w800,
-                    color: iconColor,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

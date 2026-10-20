@@ -14,6 +14,7 @@ class EnglishLearningDashboard extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: const Color(0xFFFBF9F3).withOpacity(0.9),
           elevation: 0,
           flexibleSpace: SafeArea(
