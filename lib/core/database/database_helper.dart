@@ -25,7 +25,6 @@ class DatabaseHelper {
 
     String path;
     if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
-      // Windows / Desktop ke liye permanent documents folder use hoga taake data delete na ho
       Directory documentsDirectory = await getApplicationDocumentsDirectory();
       path = join(documentsDirectory.path, filePath);
     } else {
@@ -60,6 +59,17 @@ class DatabaseHelper {
         FOREIGN KEY (parent_id) REFERENCES parents (id) ON DELETE CASCADE
       )
     ''');
+
+    // Stars aur progress save karne ke liye nayi table
+    await db.execute('''
+      CREATE TABLE user_progress (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        total_stars INTEGER
+      )
+    ''');
+    
+    // Initial 175 stars insert kar rahe hain
+    await db.insert('user_progress', {'total_stars': 175});
   }
 
   Future<int> registerParentAndChild({
@@ -134,5 +144,31 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [childId],
     );
+  }
+
+  // --- Stars Get karne ke liye ---
+  Future<int> getStars() async {
+    final db = await database;
+    final result = await db.query('user_progress');
+    if (result.isNotEmpty && result.first['total_stars'] != null) {
+      return result.first['total_stars'] as int;
+    }
+    return 175;
+  }
+
+  // --- Stars Update / Save karne ke liye ---
+  Future<void> updateStars(int stars) async {
+    final db = await database;
+    final count = await db.query('user_progress');
+    if (count.isEmpty) {
+      await db.insert('user_progress', {'total_stars': stars});
+    } else {
+      await db.update(
+        'user_progress',
+        {'total_stars': stars},
+        where: 'id = ?',
+        whereArgs: [1],
+      );
+    }
   }
 }

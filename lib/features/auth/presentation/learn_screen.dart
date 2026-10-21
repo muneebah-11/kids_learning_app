@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../modules/english_sub_modules_screen.dart';
 import '../../modules/body_parts_screen.dart';
 import 'package:kids_learning_app/features/modules/shapes_and_colors_screen.dart';
+import '../../modules/moral_stories_screen.dart';
 class LearnScreen extends StatelessWidget {
   const LearnScreen({Key? key}) : super(key: key);
 
@@ -277,73 +278,80 @@ _buildModuleCard(
                 const SizedBox(height: 14),
 
                 // 7. Stories & Rhymes Banner Card
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFB958).withOpacity(0.35),
-                    borderRadius: BorderRadius.circular(22),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0xFF845400),
-                        offset: Offset(0, 4),
-                        blurRadius: 0,
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.asset(
-                          'assets/images/kids_playroom_bg.jpg',
-                          width: 60,
-                          height: 55,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              'Stories & Rhymes',
-                              style: TextStyle(
-                                fontFamily: 'Rubik',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w900,
-                                color: Color(0xFF1B1C19),
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Text(
-                              'Magical Tales & Audio',
-                              style: TextStyle(
-                                fontFamily: 'Nunito Sans',
-                                fontSize: 11,
-                                fontWeight: FontWeight.w800,
-                                color: Color(0xFF845400),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFF845400),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.volume_up, color: Colors.white, size: 20),
-                        ),
-                      ),
-                    ],
-                  ),
+             GestureDetector(
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MoralStoriesScreen(),
+      ),
+    );
+  },
+  child: Container(
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: const Color(0xFFFFB958).withOpacity(0.35),
+      borderRadius: BorderRadius.circular(22),
+      boxShadow: const [
+        BoxShadow(
+          color: Color(0xFF845400),
+          offset: Offset(0, 4),
+          blurRadius: 0,
+        ),
+      ],
+    ),
+    child: Row(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Image.asset(
+            'assets/images/kids_playroom_bg.jpg',
+            width: 60,
+            height: 55,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text(
+                'Moral Stories',
+                style: TextStyle(
+                  fontFamily: 'Rubik',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFF1B1C19),
                 ),
-                const SizedBox(height: 20),
+              ),
+              SizedBox(height: 2),
+              Text(
+                'Magical Tales & Audio',
+                style: TextStyle(
+                  fontFamily: 'Nunito Sans',
+                  fontSize: 11,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF845400),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: 40,
+          height: 40,
+          decoration: const BoxDecoration(
+            color: Color(0xFF845400),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.volume_up, color: Colors.white, size: 20),
+        ),
+      ],
+    ),
+  ),
+),
+const SizedBox(height: 20),
               ],
             ),
           ),
