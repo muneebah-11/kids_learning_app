@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 // Agar aapki database helper file yahan hai toh import karein:
-import '../../core/database/database_helper.dart';
+import 'package:kids_learning_app/core/database/database_helper.dart';
 
 void main() {
   runApp(const WonderKidsActivitiesApp());

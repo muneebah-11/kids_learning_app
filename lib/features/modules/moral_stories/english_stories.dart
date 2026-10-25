@@ -212,6 +212,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       'textToSpeak': 'Once upon a time, Pecky the crow was very thirsty. He looked everywhere for water and found a tall pitcher with very little water at the bottom!',
       'urduText': 'ایک دفعہ کا ذکر ہے، پیاسا کوا پانی کی تلاش میں تھا- اسے ایک لمبا گھڑا ملا جس کی تہہ میں بہت تھوڑا پانی تھا-',
       'phonics': 'Phonics Focus: /k/ Crow • /w/ Water',
+      'phonicsSpeech': 'k Crow, w Water',
       'crowToast': 'Pecky says: "Caw caw! I am so thirsty!"',
       'crowEmoji': '🦅✨',
       'pitcherToast': 'Pitcher: *Splish splash!* Water is far below!',
@@ -225,6 +226,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       'textToSpeak': 'Pecky tried to reach the water with his beak, but the pitcher was too deep. Then he saw shiny pebbles on the ground and had a clever idea!',
       'urduText': 'پیکی نے اپنی چونچ سے پانی پینے کی کوشش کی، لیکن گھڑا بہت گہرا تھا- پھر اس نے زمین پر چمکدار کنکریاں دیکھیں اور ایک ترکیب سوچی!',
       'phonics': 'Phonics Focus: /b/ Beak • /p/ Pebbles',
+      'phonicsSpeech': 'b Beak, p Pebbles',
       'crowToast': 'Pecky chirps: "Aha! Look at these shiny pebbles!"',
       'crowEmoji': '💡🦅',
       'pitcherToast': 'Pebbles glisten: *Clack clack!*',
@@ -238,6 +240,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
       'textToSpeak': 'One by one, Pecky picked up pebbles and dropped them into the pitcher. The water rose higher until Pecky took a big, happy drink!',
       'urduText': 'ایک ایک کر کے، پیکی نے کنکریاں اٹھائیں اور گھڑے میں ڈالیں- پانی اوپر آتا گیا اور پیکی نے مزے سے پانی پی لیا!',
       'phonics': 'Phonics Focus: /d/ Drink • /h/ High',
+      'phonicsSpeech': 'd Drink, h High',
       'crowToast': 'Pecky cheers: "Gulp gulp! We did it!"',
       'crowEmoji': '🎉🦅',
       'pitcherToast': 'Pitcher sparkles: *Hooray! Water is at the top!*',
@@ -255,6 +258,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setPitch(1.0);
     await flutterTts.setSpeechRate(0.42);
+    await flutterTts.setVolume(1.0);
 
     flutterTts.setCompletionHandler(() {
       if (mounted) {
@@ -491,21 +495,29 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                                 ],
                               ),
                               const SizedBox(height: 10),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                decoration: BoxDecoration(color: const Color(0xFFC2E8FF), borderRadius: BorderRadius.circular(16)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.record_voice_over, color: Color(0xFF006689), size: 18),
-                                        const SizedBox(width: 6),
-                                        Text(pageData['phonics'], style: const TextStyle(fontFamily: 'Rubik', fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF003F57))),
-                                      ],
-                                    ),
-                                    const Icon(Icons.volume_up, color: Color(0xFF006689), size: 18),
-                                  ],
+                              // Phonics Focus Bar
+                              InkWell(
+                                onTap: () async {
+                                  await flutterTts.stop();
+                                  await flutterTts.setVolume(1.0);
+                                  await flutterTts.speak(pageData['phonicsSpeech']);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                  decoration: BoxDecoration(color: const Color(0xFFC2E8FF), borderRadius: BorderRadius.circular(16)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.record_voice_over, color: Color(0xFF006689), size: 18),
+                                          const SizedBox(width: 6),
+                                          Text(pageData['phonics'], style: const TextStyle(fontFamily: 'Rubik', fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF003F57))),
+                                        ],
+                                      ),
+                                      const Icon(Icons.volume_up, color: Color(0xFF006689), size: 18),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -535,8 +547,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               flex: 3,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFF0EEE8),
-                                  foregroundColor: const Color(0xFF6E7980),
+                                  backgroundColor: currentPage > 1 ? const Color(0xFF24BC6B) : const Color(0xFFF0EEE8),
+                                  foregroundColor: currentPage > 1 ? Colors.white : const Color(0xFF6E7980),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                                 ),
                                 onPressed: currentPage > 1 ? _prevPage : null,
@@ -561,8 +573,8 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                               flex: 3,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF24BC6B),
-                                  foregroundColor: Colors.white,
+                                  backgroundColor: currentPage < 3 ? const Color(0xFF24BC6B) : const Color(0xFFF0EEE8),
+                                  foregroundColor: currentPage < 3 ? Colors.white : const Color(0xFF6E7980),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                                 ),
                                 onPressed: _nextPage,
@@ -623,6 +635,7 @@ class _LazyMonkeyStoryScreenState extends State<LazyMonkeyStoryScreen> {
       'badge': 'Scene 1 • Sweet Bananas ✨',
       'imageAsset': 'assets/images/monkey_scene1.png',
       'phonics': 'Phonics Focus: /m/ Monkey • /b/ Banana',
+      'phonicsSpeech': 'm Monkey, b Banana',
       'hotspotItem': '🍌 Yellow Bananas!',
       'englishHtml': 'Once upon a time, Mimi the monkey learned that sharing sweet yellow bananas brings the biggest giggles in the jungle!',
       'textToSpeak': 'Once upon a time, Mimi the monkey learned that sharing sweet yellow bananas brings the biggest giggles in the jungle!',
@@ -635,6 +648,7 @@ class _LazyMonkeyStoryScreenState extends State<LazyMonkeyStoryScreen> {
       'badge': 'Scene 2 • The Friendly Parrot 🦜',
       'imageAsset': 'assets/images/monkey_scene2.png',
       'phonics': 'Phonics Focus: /p/ Parrot • /f/ Friends',
+      'phonicsSpeech': 'p Parrot, f Friends',
       'hotspotItem': '🦜 Polly Parrot!',
       'englishHtml': 'Mimi saw Polly Parrot sitting quietly on a high branch. She shared a yummy piece, and they both started singing happy songs together!',
       'textToSpeak': 'Mimi saw Polly Parrot sitting quietly on a high branch. She shared a yummy piece, and they both started singing happy songs together!',
@@ -647,6 +661,7 @@ class _LazyMonkeyStoryScreenState extends State<LazyMonkeyStoryScreen> {
       'badge': 'Scene 3 • Jungle Party 🌴',
       'imageAsset': 'assets/images/monkey_scene3.png',
       'phonics': 'Phonics Focus: /s/ Sharing • /j/ Joy',
+      'phonicsSpeech': 's Sharing, j Joy',
       'hotspotItem': '🎉 Big Party!',
       'englishHtml': 'Soon, all the friendly animals gathered for a jungle feast. Mimi was no longer lazy; she was the kindest helper!',
       'textToSpeak': 'Soon, all the friendly animals gathered for a jungle feast. Mimi was no longer lazy; she was the kindest helper!',
@@ -666,6 +681,7 @@ class _LazyMonkeyStoryScreenState extends State<LazyMonkeyStoryScreen> {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setPitch(1.0);
     await flutterTts.setSpeechRate(0.42);
+    await flutterTts.setVolume(1.0);
 
     flutterTts.setCompletionHandler(() {
       if (mounted) {
@@ -890,21 +906,29 @@ class _LazyMonkeyStoryScreenState extends State<LazyMonkeyStoryScreen> {
                                 ],
                               ),
                               const SizedBox(height: 10),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                decoration: BoxDecoration(color: const Color(0xFFC2E8FF), borderRadius: BorderRadius.circular(16)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.record_voice_over, color: Color(0xFF006689), size: 18),
-                                        const SizedBox(width: 6),
-                                        Text(pageData['phonics'], style: const TextStyle(fontFamily: 'Rubik', fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF003F57))),
-                                      ],
-                                    ),
-                                    const Icon(Icons.volume_up, color: Color(0xFF006689), size: 18),
-                                  ],
+                              // Phonics Focus Bar
+                              InkWell(
+                                onTap: () async {
+                                  await flutterTts.stop();
+                                  await flutterTts.setVolume(1.0);
+                                  await flutterTts.speak(pageData['phonicsSpeech']);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                  decoration: BoxDecoration(color: const Color(0xFFC2E8FF), borderRadius: BorderRadius.circular(16)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.record_voice_over, color: Color(0xFF006689), size: 18),
+                                          const SizedBox(width: 6),
+                                          Text(pageData['phonics'], style: const TextStyle(fontFamily: 'Rubik', fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF003F57))),
+                                        ],
+                                      ),
+                                      const Icon(Icons.volume_up, color: Color(0xFF006689), size: 18),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -934,8 +958,8 @@ class _LazyMonkeyStoryScreenState extends State<LazyMonkeyStoryScreen> {
                               flex: 3,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFF0EEE8),
-                                  foregroundColor: const Color(0xFF6E7980),
+                                  backgroundColor: currentPage > 1 ? const Color(0xFF24BC6B) : const Color(0xFFF0EEE8),
+                                  foregroundColor: currentPage > 1 ? Colors.white : const Color(0xFF6E7980),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                                 ),
                                 onPressed: currentPage > 1 ? _prevPage : null,
@@ -960,8 +984,8 @@ class _LazyMonkeyStoryScreenState extends State<LazyMonkeyStoryScreen> {
                               flex: 3,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF24BC6B),
-                                  foregroundColor: Colors.white,
+                                  backgroundColor: currentPage < 3 ? const Color(0xFF24BC6B) : const Color(0xFFF0EEE8),
+                                  foregroundColor: currentPage < 3 ? Colors.white : const Color(0xFF6E7980),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                                 ),
                                 onPressed: _nextPage,
@@ -1024,6 +1048,7 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
       'badge': 'Scene 1 • Morning Songs ✨',
       'imageAsset': 'assets/images/duck_scene1.png',
       'phonics': '/d/ Duck • /p/ Pond 🔊',
+      'phonicsSpeech': 'd Duck, p Pond',
       'textToSpeak': 'Quack, quack! Puddle the duck loves singing joyful morning songs across the lilypad pond with bright feathers!',
       'englishHtml': 'Quack, quack! Puddle the duck loves singing joyful morning songs across the lilypad pond with bright feathers!',
       'urduText': 'قوں قوں! پڈل بتھ کو کنول کے تالاب پر صبح کے خوشگوار گیت گانا بہت پسند تھا-',
@@ -1039,8 +1064,9 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
     {
       'page': 2,
       'badge': 'Scene 2 • Meeting Froggy Friends ✨',
-      'imageAsset': 'assets/images/duck_scene2.png',
+      'imageAsset': 'assets/images/duck_scene2.png', // Corrected image asset path here[cite: 9]
       'phonics': '/f/ Frog • /s/ Splash 🔊',
+      'phonicsSpeech': 'f Frog, s Splash',
       'textToSpeak': 'Ribbit! Puddle splashed water to say hello to his little green friends who were leaping happily over the smooth river stones!',
       'englishHtml': 'Ribbit! Puddle splashed water to say hello to his little green friends who were leaping happily over the smooth river stones!',
       'urduText': 'پڈل نے مینڈک دوستوں کے ساتھ چھینٹیں اڑائیں اور مل کر خوب مستی کی-',
@@ -1058,6 +1084,7 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
       'badge': 'Scene 3 • Joyful Sunset Quacks ✨',
       'imageAsset': 'assets/images/duck_scene3.png',
       'phonics': '/s/ Sun • /j/ Joy 🔊',
+      'phonicsSpeech': 's Sun, j Joy',
       'textToSpeak': 'As the warm yellow sun smiled down, the whole family started swimming together, sharing sweet kindness with all pond animals!',
       'englishHtml': 'As the warm yellow sun smiled down, the whole family started swimming together, sharing sweet kindness with all pond animals!',
       'urduText': 'پورے تالاب نے سنہری سورج تلے مل کر نغمے گائے اور خوشیاں بانٹیں-',
@@ -1082,6 +1109,7 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
     await flutterTts.setLanguage("en-US");
     await flutterTts.setPitch(1.1);
     await flutterTts.setSpeechRate(0.42);
+    await flutterTts.setVolume(1.0);
 
     flutterTts.setCompletionHandler(() {
       if (mounted) {
@@ -1168,7 +1196,7 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
               appBar: PreferredSize(
                 preferredSize: const Size.fromHeight(64),
                 child: AppBar(
-                  backgroundColor: const Color(0xFFFBF9F3).withOpacity(0.85),
+                  backgroundColor: const Color(0xFFFBF9F3).withOpacity(0.8),
                   elevation: 0,
                   automaticallyImplyLeading: false,
                   flexibleSpace: SafeArea(
@@ -1306,21 +1334,29 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
                                 ],
                               ),
                               const SizedBox(height: 10),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                decoration: BoxDecoration(color: const Color(0xFFC2E8FF), borderRadius: BorderRadius.circular(16)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.record_voice_over, color: Color(0xFF006689), size: 18),
-                                        const SizedBox(width: 6),
-                                        Text(pageData['phonics'], style: const TextStyle(fontFamily: 'Rubik', fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF003F57))),
-                                      ],
-                                    ),
-                                    const Icon(Icons.volume_up, color: Color(0xFF006689), size: 18),
-                                  ],
+                              // Phonics Focus Bar
+                              InkWell(
+                                onTap: () async {
+                                  await flutterTts.stop();
+                                  await flutterTts.setVolume(1.0);
+                                  await flutterTts.speak(pageData['phonicsSpeech']);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                  decoration: BoxDecoration(color: const Color(0xFFC2E8FF), borderRadius: BorderRadius.circular(16)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(Icons.record_voice_over, color: Color(0xFF006689), size: 18),
+                                          const SizedBox(width: 6),
+                                          Text(pageData['phonics'], style: const TextStyle(fontFamily: 'Rubik', fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF003F57))),
+                                        ],
+                                      ),
+                                      const Icon(Icons.volume_up, color: Color(0xFF006689), size: 18),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -1353,6 +1389,7 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
                                   return InkWell(
                                     onTap: () async {
                                       await flutterTts.stop();
+                                      await flutterTts.setVolume(1.0);
                                       await flutterTts.setLanguage("en-US");
                                       await flutterTts.speak(chip['sound']);
                                       _triggerToast('Pronouncing: "${chip['sound']}" 🗣️');
@@ -1386,8 +1423,8 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
                               flex: 3,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFF0EEE8),
-                                  foregroundColor: const Color(0xFF6E7980),
+                                  backgroundColor: currentPage > 1 ? const Color(0xFF24BC6B) : const Color(0xFFF0EEE8),
+                                  foregroundColor: currentPage > 1 ? Colors.white : const Color(0xFF6E7980),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                                 ),
                                 onPressed: currentPage > 1 ? _prevPage : null,
@@ -1412,8 +1449,8 @@ class _HappyDuckStoryScreenState extends State<HappyDuckStoryScreen> {
                               flex: 3,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF24BC6B),
-                                  foregroundColor: Colors.white,
+                                  backgroundColor: currentPage < 3 ? const Color(0xFF24BC6B) : const Color(0xFFF0EEE8),
+                                  foregroundColor: currentPage < 3 ? Colors.white : const Color(0xFF6E7980),
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                                 ),
                                 onPressed: _nextPage,

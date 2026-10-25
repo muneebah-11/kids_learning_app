@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-// Yahan apni English sub modules screen ko import kar lein ge jab ban jayegi:
-import '../../modules/english_sub_modules_screen.dart';
-import '../../modules/body_parts_screen.dart';
-import 'package:kids_learning_app/features/modules/shapes_and_colors_screen.dart';
-import '../../modules/moral_stories_screen.dart';
+import '../../modules/english/english_sub_modules_screen.dart';
+import '../../modules/body_parts/body_parts_screen.dart';
+import '../../modules/shapes_and_colors/shapes_and_colors_screen.dart';
+import '../../modules/moral_stories/moral_stories_screen.dart';
+import '../../modules/maths/numbers_math_screen.dart';
 class LearnScreen extends StatelessWidget {
   const LearnScreen({Key? key}) : super(key: key);
 
@@ -199,18 +199,27 @@ class LearnScreen extends StatelessWidget {
                     ),
 
                     // 3. Numbers
-                    _buildModuleCard(
-                      bgColor: const Color(0xFFFFDDB6).withOpacity(0.6),
-                      shadowColor: const Color(0xFFFFAA1D),
-                      topBadgeText: '123',
-                      title: 'Numbers',
-                      subtitle: 'Math & Counting',
-                      imagePath: 'assets/images/numbers_mod.jpg',
-                      iconColor: const Color(0xFF845400),
-                      buttonColor: const Color(0xFFFFAA1D),
-                      onAudioTap: () {},
-                    ),
-
+                   GestureDetector(
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NumbersMathScreen(),
+      ),
+    );
+  },
+  child: _buildModuleCard(
+    bgColor: const Color(0xFFFFDDB6).withOpacity(0.6),
+    shadowColor: const Color(0xFFFFAA1D),
+    topBadgeText: '123',
+    title: 'Numbers',
+    subtitle: 'Math & Counting',
+    imagePath: 'assets/images/numbers_mod.jpg',
+    iconColor: const Color(0xFF845400),
+    buttonColor: const Color(0xFFFFAA1D),
+    onAudioTap: () {},
+  ),
+),
                     // 4. Body Parts
                     // 4. Body Parts
 // 4. Body Parts
@@ -283,7 +292,7 @@ _buildModuleCard(
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const MoralStoriesScreen(),
+        builder: (context) => MoralStoriesScreen(),
       ),
     );
   },
