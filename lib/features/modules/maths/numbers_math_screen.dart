@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'numbers_sub_modules_screen.dart';
+import 'counting_objects_screen.dart';
+import 'find_numbers_screen.dart';
+import 'tracing_write_screen.dart';
 void main() {
   runApp(const NumbersMathApp());
 }
@@ -232,7 +234,7 @@ class _NumbersMathScreenState extends State<NumbersMathScreen> {
                                 ),
                               ),
                               const SizedBox(width: 10),
-                              Column(
+                              const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
@@ -348,69 +350,81 @@ _buildActivityCard(
   },
 ),
                             // Card 2: Find Numbers
-                            _buildActivityCard(
-                              cardBgColor: const Color(0xFFDCEBFA),
-                              badgeText: 'Fun Quiz',
-                              badgeColor: const Color(0xFFC2E8FF),
-                              badgeTextColor: const Color(0xFF001E2C),
-                              topEmoji: '🔢',
-                              visualContent: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 44,
-                                    height: 44,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF006689),
-                                      borderRadius: BorderRadius.circular(16),
-                                      boxShadow: const [BoxShadow(color: Color(0xFF004D68), offset: Offset(0, 3))],
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: const Text('7', style: TextStyle(fontFamily: 'Rubik', fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
-                                  ),
-                                ],
-                              ),
-                              title: 'Find Numbers',
-                              subtitle: 'Identify & match',
-                              buttonText: 'Play',
-                              buttonIcon: Icons.sports_esports,
-                              onPressed: () => _handleActivityClick('Find Numbers', '🔢', 5),
-                            ),
+                            // Card 2: Find Numbers
+_buildActivityCard(
+  cardBgColor: const Color(0xFFDCEBFA),
+  badgeText: 'Fun Quiz',
+  badgeColor: const Color(0xFFC2E8FF),
+  badgeTextColor: const Color(0xFF001E2C),
+  topEmoji: '🔢',
+  visualContent: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Container(
+        width: 44,
+        height: 44,
+        decoration: BoxDecoration(
+          color: const Color(0xFF006689),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [BoxShadow(color: Color(0xFF004D68), offset: Offset(0, 3))],
+        ),
+        alignment: Alignment.center,
+        child: const Text('7', style: TextStyle(fontFamily: 'Rubik', fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+      ),
+    ],
+  ),
+  title: 'Find Numbers',
+  subtitle: 'Identify & match',
+  buttonText: 'Play',
+  buttonIcon: Icons.sports_esports,
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const FindNumbersQuizScreen()),
+    );
+  },
+),
                             // Card 3: Tracing & Write (Light Pink)
-                            _buildActivityCard(
-                              cardBgColor: const Color(0xFFFDE8EE),
-                              badgeText: 'PG & KG',
-                              badgeColor: const Color(0xFFFFDDB6),
-                              badgeTextColor: const Color(0xFF2A1800),
-                              topEmoji: '✍️',
-                              visualContent: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  const Text(
-                                    '3',
-                                    style: TextStyle(fontFamily: 'Rubik', fontSize: 44, fontWeight: FontWeight.w900, color: Color(0xFFBDC8D0)),
-                                  ),
-                                  Positioned(
-                                    right: 12,
-                                    top: 14,
-                                    child: Container(
-                                      width: 26,
-                                      height: 26,
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFF845400),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const Icon(Icons.edit, color: Colors.white, size: 14),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              title: 'Tracing & Write',
-                              subtitle: 'Dotted line guides',
-                              buttonText: 'Trace',
-                              buttonIcon: Icons.brush,
-                              onPressed: () => _handleActivityClick('Tracing & Write', '✍️', 5),
-                            ),
+// Card 3: Tracing & Write (Light Pink)
+_buildActivityCard(
+  cardBgColor: const Color(0xFFFDE8EE),
+  badgeText: 'PG & KG',
+  badgeColor: const Color(0xFFFFDDB6),
+  badgeTextColor: const Color(0xFF2A1800),
+  topEmoji: '✍️',
+  visualContent: Stack(
+    alignment: Alignment.center,
+    children: [
+      const Text(
+        '3',
+        style: TextStyle(fontFamily: 'Rubik', fontSize: 44, fontWeight: FontWeight.w900, color: Color(0xFFBDC8D0)),
+      ),
+      Positioned(
+        right: 12,
+        top: 14,
+        child: Container(
+          width: 26,
+          height: 26,
+          decoration: const BoxDecoration(
+            color: Color(0xFF845400),
+            shape: BoxShape.circle,
+          ),
+          child: const Icon(Icons.edit, color: Colors.white, size: 14),
+        ),
+      ),
+    ],
+  ),
+  title: 'Tracing & Write',
+  subtitle: 'Dotted line guides',
+  buttonText: 'Trace',
+  buttonIcon: Icons.brush,
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const TracingWriteScreen()),
+    );
+  },
+),
                             // Card 4: Match Puzzle
                             _buildActivityCard(
                               cardBgColor: const Color(0xFFEFECEF),
@@ -460,7 +474,7 @@ _buildActivityCard(
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
+                                  const Row(
                                     children: [
                                       const Text('🎈', style: TextStyle(fontSize: 22)),
                                       const SizedBox(width: 8),
@@ -504,7 +518,7 @@ _buildActivityCard(
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
+                                        const Row(
                                           children: const [
                                             Icon(Icons.touch_app, size: 16, color: Color(0xFF006689)),
                                             SizedBox(width: 4),
@@ -551,7 +565,7 @@ _buildActivityCard(
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                                 ),
                                 onPressed: () => _handleActivityClick('Drop & Learn Adventure', '🧺', 10),
-                                child: Row(
+                                child:const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
                                     Text('Drop & Learn Adventure', style: TextStyle(fontFamily: 'Rubik', fontSize: 15, fontWeight: FontWeight.bold)),
