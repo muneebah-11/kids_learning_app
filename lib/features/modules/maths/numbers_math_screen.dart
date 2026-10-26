@@ -5,6 +5,8 @@ import 'package:path/path.dart';
 import 'counting_objects_screen.dart';
 import 'find_numbers_screen.dart';
 import 'tracing_write_screen.dart';
+import 'match_puzzle_screen.dart';
+import 'drag_drop_counting_screen.dart';
 void main() {
   runApp(const NumbersMathApp());
 }
@@ -237,7 +239,7 @@ class _NumbersMathScreenState extends State<NumbersMathScreen> {
                               const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children:[
                                   Text(
                                     'Numbers & Math 🔢',
                                     style: TextStyle(
@@ -455,7 +457,12 @@ _buildActivityCard(
                               subtitle: 'Group & numbers',
                               buttonText: 'Match',
                               buttonIcon: Icons.extension,
-                              onPressed: () => _handleActivityClick('Match Puzzle', '🎯', 5),
+                              onPressed: (){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MatchPuzzleScreen()),
+    );
+  },
                             ),
                           ],
                         ),
@@ -476,11 +483,11 @@ _buildActivityCard(
                                 children: [
                                   const Row(
                                     children: [
-                                      const Text('🎈', style: TextStyle(fontSize: 22)),
-                                      const SizedBox(width: 8),
+                                       Text('🎈', style: TextStyle(fontSize: 22)),
+                                      SizedBox(width: 8),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: const [
+                                        children: [
                                           Text(
                                             'Drag & Drop Counting',
                                             style: TextStyle(fontFamily: 'Rubik', fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF1B1C19)),
@@ -519,7 +526,7 @@ _buildActivityCard(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Row(
-                                          children: const [
+                                          children: [
                                             Icon(Icons.touch_app, size: 16, color: Color(0xFF006689)),
                                             SizedBox(width: 4),
                                             Text('Tap items to pack:', style: TextStyle(fontFamily: 'Rubik', fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF3E484F))),
@@ -564,10 +571,15 @@ _buildActivityCard(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                                 ),
-                                onPressed: () => _handleActivityClick('Drop & Learn Adventure', '🧺', 10),
+                               onPressed: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const DragDropCountingScreen()),
+  );
+},
                                 child:const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children:[
                                     Text('Drop & Learn Adventure', style: TextStyle(fontFamily: 'Rubik', fontSize: 15, fontWeight: FontWeight.bold)),
                                     SizedBox(width: 8),
                                     Icon(Icons.rocket_launch, size: 20),

@@ -4,6 +4,7 @@ import '../../modules/body_parts/body_parts_screen.dart';
 import '../../modules/shapes_and_colors/shapes_and_colors_screen.dart';
 import '../../modules/moral_stories/moral_stories_screen.dart';
 import '../../modules/maths/numbers_math_screen.dart';
+import '../../modules/islamic/islamic_learning_screen.dart';
 class LearnScreen extends StatelessWidget {
   const LearnScreen({Key? key}) : super(key: key);
 
@@ -271,17 +272,25 @@ _buildModuleCard(
   },
 ),
                     // 6. Islamic Learning
-                    _buildModuleCard(
-                      bgColor: const Color(0xFF53DF8A).withOpacity(0.25),
-                      shadowColor: const Color(0xFF006D39),
-                      topBadgeWidget: const Icon(Icons.nightlight, color: Color(0xFF006D39), size: 22),
-                      title: 'Islamic Learning',
-                      subtitle: 'Bismillah, Duas & Kalma',
-                      imagePath: 'assets/images/islamic_mod.jpg',
-                      iconColor: const Color(0xFF006D39),
-                      buttonColor: const Color(0xFF006D39),
-                      onAudioTap: () {},
-                    ),
+                   _buildModuleCard(
+  bgColor: const Color(0xFF53DF8A).withOpacity(0.25),
+  shadowColor: const Color(0xFF006D39),
+  topBadgeWidget: const Icon(Icons.nightlight, color: Color(0xFF006D39), size: 22),
+  title: 'Islamic Learning',
+  subtitle: 'Bismillah, Duas & Kalma',
+  imagePath: 'assets/images/islamic_mod.jpg',
+  iconColor: const Color(0xFF006D39),
+  buttonColor: const Color(0xFF006D39),
+  onAudioTap: () {},
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const IslamicLearningScreen(),
+      ),
+    );
+  },
+),
                   ],
                 ),
                 const SizedBox(height: 14),
@@ -321,10 +330,10 @@ _buildModuleCard(
           ),
         ),
         const SizedBox(width: 12),
-        Expanded(
+        const Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children:[
               Text(
                 'Moral Stories',
                 style: TextStyle(
