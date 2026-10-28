@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
-
+import 'basic_duas_screen.dart'; 
+import 'kalma_screen.dart';
+import 'short_surah_screen.dart';
+import 'namaz_learning_screen.dart';
 void main() {
   runApp(const IslamicHubApp());
 }
@@ -170,7 +173,7 @@ class _IslamicLearningScreenState extends State<IslamicLearningScreen> with Sing
     ),
     const LessonData(
       id: 2,
-      titleEn: "First Kalma",
+      titleEn: "Kalma",
       titleUr: "کلمہ طیبہ",
       descEn: "Tayyibah with Urdu & English Meaning",
       descUr: "کلمہ طیبہ اردو اور انگریزی ترجمہ کے ساتھ",
@@ -847,7 +850,42 @@ class _IslamicLearningScreenState extends State<IslamicLearningScreen> with Sing
                           itemBuilder: (context, index) {
                             final lesson = lessons[index];
                             return InkWell(
-                              onTap: () => _openLessonModal(lesson),
+                            onTap: () {
+  if (lesson.id == 1) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const BasicDuasScreen(),
+    ),
+  );
+} else if (lesson.id == 2) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const KalmaScreen(),
+    ),
+  );
+  } else if (lesson.id == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ShortSurahsScreen(),
+        ),
+      );
+      } else if (lesson.id == 4) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const NamazLearningScreen(),
+    ),
+  );
+}
+    
+ else {
+  _openLessonModal(lesson);
+}
+},
+
                               child: Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
