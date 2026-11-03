@@ -375,22 +375,22 @@ class _ShortSurahsScreenState extends State<ShortSurahsScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                flutterTts.stop();
-                                Navigator.maybePop(context);
-                              },
-                              child: Container(
-                                width: 38,
-                                height: 38,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFEAE8E2),
-                                  borderRadius: BorderRadius.circular(19),
-                                ),
-                                alignment: Alignment.center,
-                                child: const Icon(Icons.arrow_back, color: Color(0xFF004D68), size: 20),
-                              ),
-                            ),
+                   InkWell(
+  onTap: () {
+    flutterTts.stop();
+    Navigator.of(context).pop();
+  },
+  child: Container(
+    width: 38,
+    height: 38,
+    decoration: BoxDecoration(
+      color: const Color(0xFFEAE8E2),
+      borderRadius: BorderRadius.circular(19),
+    ),
+    alignment: Alignment.center,
+    child: const Icon(Icons.arrow_back, color: Color(0xFF004D68), size: 20),
+  ),
+),
                             const SizedBox(width: 8),
                             Flexible(
                               child: Column(

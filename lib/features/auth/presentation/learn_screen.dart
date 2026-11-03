@@ -5,6 +5,7 @@ import '../../modules/shapes_and_colors/shapes_and_colors_screen.dart';
 import '../../modules/moral_stories/moral_stories_screen.dart';
 import '../../modules/maths/numbers_math_screen.dart';
 import '../../modules/islamic/islamic_learning_screen.dart';
+import '../../modules/urdu/urdu_submodules_screen.dart';
 class LearnScreen extends StatelessWidget {
   const LearnScreen({Key? key}) : super(key: key);
 
@@ -186,18 +187,27 @@ class LearnScreen extends StatelessWidget {
                     ),
 
                     // 2. Urdu Haroof
-                    _buildModuleCard(
-                      bgColor: const Color(0xFF73FDA3).withOpacity(0.35),
-                      shadowColor: const Color(0xFF24BC6B),
-                      topBadgeText: 'ا ب',
-                      title: 'اردو حروف',
-                      subtitle: 'الف ب پ Tracing',
-                      imagePath: 'assets/images/urdu_mod.jpg',
-                      iconColor: const Color(0xFF006D39),
-                      buttonColor: const Color(0xFF006D39),
-                      isRtl: true,
-                      onAudioTap: () {},
-                    ),
+                   _buildModuleCard(
+  bgColor: const Color(0xFF73FDA3).withOpacity(0.35),
+  shadowColor: const Color(0xFF24BC6B),
+  topBadgeText: 'ا ب',
+  title: 'اردو حروف',
+  subtitle: 'الف ب پ Tracing',
+  imagePath: 'assets/images/urdu_mod.jpg',
+  iconColor: const Color(0xFF006D39),
+  buttonColor: const Color(0xFF006D39),
+  isRtl: true,
+  onAudioTap: () {},
+  onTap: () {
+    // Yahan Urdu Submodules Screen par navigate karne ka code add kar diya hai
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UrduSubmodulesScreen(),
+      ),
+    );
+  },
+),
 
                     // 3. Numbers
                    GestureDetector(

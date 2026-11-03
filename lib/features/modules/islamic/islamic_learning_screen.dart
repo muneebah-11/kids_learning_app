@@ -869,7 +869,7 @@ class _IslamicLearningScreenState extends State<IslamicLearningScreen> with Sing
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ShortSurahsScreen(),
+          builder: (context) => ShortSurahsApp(),
         ),
       );
       } else if (lesson.id == 4) {
