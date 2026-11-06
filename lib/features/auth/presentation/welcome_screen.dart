@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'signup_screen.dart'; // Apni signup screen ka file import ensure kar lein
-import 'login_screen.dart'; // Apni LoginScreen file ka path yahan dein
+import 'signup_screen.dart';
+import 'login_screen.dart';
 
 class WonderKidsWelcomeScreen extends StatelessWidget {
   const WonderKidsWelcomeScreen({Key? key}) : super(key: key);
@@ -8,14 +8,14 @@ class WonderKidsWelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFECE6),
+      backgroundColor: const Color(0xFFEFECE6), // Laptop ki background screen
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
+          constraints: const BoxConstraints(maxWidth: 430), // Mobile width constraint
           child: Container(
             decoration: const BoxDecoration(
               color: Color(0xFFFBF9F3),
-              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 15)],
+              boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 20)],
             ),
             child: Stack(
               fit: StackFit.expand,
@@ -70,7 +70,7 @@ class WonderKidsWelcomeScreen extends StatelessWidget {
 
                         const Spacer(flex: 1),
 
-                        // Center content: Mascot Image in Circular Container
+                        // Center content: Mascot Image & School Branding
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -125,15 +125,27 @@ class WonderKidsWelcomeScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 10),
+                            
+                            // 🏫 School Name
+                            const Text(
+                              'The Lyceum Inn School',
+                              style: TextStyle(
+                                color: Color(0xFF386641), 
+                                fontSize: 15, 
+                                fontWeight: FontWeight.bold, 
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+
                             const Text(
                               'WonderKids',
-                              style: TextStyle(color: Color(0xFF135A94), fontSize: 34, fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Color(0xFF135A94), fontSize: 32, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 6),
                             RichText(
                               text: const TextSpan(
-                                style: TextStyle(fontSize: 16, color: Colors.black),
+                                style: TextStyle(fontSize: 15, color: Colors.black),
                                 children: [
                                   TextSpan(text: 'Play, Learn & Grow! '),
                                   TextSpan(text: '(Ages 3-5)', style: TextStyle(color: Color(0xFFFF9F1C), fontWeight: FontWeight.bold)),
@@ -153,13 +165,6 @@ class WonderKidsWelcomeScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: const Color(0xFFFF9F1C),
                                 borderRadius: BorderRadius.circular(30),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.15),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
                               ),
                               child: TextButton(
                                 onPressed: () {
@@ -206,7 +211,7 @@ class WonderKidsWelcomeScreen extends StatelessWidget {
                                       children: [
                                         TextSpan(text: 'I already have a profile • '),
                                         TextSpan(
-                                          text: 'Parents Log In',
+                                          text: 'Log In/sign in',
                                           style: TextStyle(
                                             color: Color(0xFF135A94),
                                             fontWeight: FontWeight.bold,

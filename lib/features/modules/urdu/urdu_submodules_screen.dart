@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kids_learning_app/core/database/database_helper.dart';
 import 'urdu_haroof_screen.dart';
+import 'word_explorer_screen.dart';
 
 void main() {
   runApp(const UrduHubApp());
@@ -272,21 +273,26 @@ class _UrduSubmodulesScreenState extends State<UrduSubmodulesScreen> {
 
                   // CARD 2: Word Explorer
                   _buildSubModuleCard(
-                    imagePath: 'assets/images/word_explorer.png',
-                    badgeText: 'Vocabulary',
-                    badgeBg: const Color(0xFF73FDA3),
-                    badgeFg: const Color(0xFF00210D),
-                    starReward: '+25',
-                    title: 'الفاظ کی شناخت (Word Explorer)',
-                    subtitle: 'Simple Word Recognition',
-                    buttonText: 'Explore Words →',
-                    buttonUrdu: '(الفاظ دیکھیں)',
-                    buttonColor: const Color(0xFF006689),
-                    textColor: Colors.white,
-                    shadowColor: const Color(0xFF003348),
-                    onTap: () => _launchModule('Word Explorer', 25),
-                  ),
-                  const SizedBox(height: 14),
+  imagePath: 'assets/images/word_explorer.png',
+  badgeText: 'Vocabulary',
+  badgeBg: const Color(0xFF73FDA3),
+  badgeFg: const Color(0xFF00210D),
+  starReward: '+25',
+  title: 'الفاظ کی شناخت (Word Explorer)',
+  subtitle: 'Simple Word Recognition',
+  buttonText: 'Explore Words →',
+  buttonUrdu: '(الفاظ دیکھیں)',
+  buttonColor: const Color(0xFF006689),
+  textColor: Colors.white,
+  shadowColor: const Color(0xFF003348),
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const WordExplorerScreen()),
+    );
+  },
+),
+const SizedBox(height: 14),
 
                   // CARD 3: Writing & Slate
                   _buildSubModuleCard(

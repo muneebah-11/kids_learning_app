@@ -15,6 +15,7 @@ class _WonderKidsSignupScreenState extends State<WonderKidsSignupScreen> {
   String _selectedLang = 'en';
   bool _isMascotScaled = false;
   bool _isLoginPressed = false;
+bool _obscureConfirmPassword = true;
 
   String _selectedAge = '4';
   String _selectedClass = 'Kindergarten (KG)';
@@ -22,6 +23,7 @@ class _WonderKidsSignupScreenState extends State<WonderKidsSignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   void _jiggleMascot() {
     setState(() {
@@ -47,6 +49,20 @@ class _WonderKidsSignupScreenState extends State<WonderKidsSignupScreen> {
   }
 
   Future<void> _handleSignup() async {
+    
+  if (_passwordController.text != confirmPasswordController.text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('❌ Error: Passwords do not match! Please check.'),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+    setState(() {
+      _isLoginPressed = false;
+    });
+    return; // اگر پاسورڈ میچ نہیں ہوں گے تو یہیں رک جائے گا اور اکاؤنٹ نہیں بنے گا!
+  }
     bool isUrdu = _selectedLang == 'ur';
     setState(() {
       _isLoginPressed = true;
@@ -378,7 +394,29 @@ class _WonderKidsSignupScreenState extends State<WonderKidsSignupScreen> {
                                 ),
                                 border: const OutlineInputBorder(),
                               ),
-                            ),
+                            ),const SizedBox(height: 16),
+Text(
+  isUrdu ? 'پاس ورڈ کی تصدیق کریں' : 'Confirm Password',
+  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF40484D)),
+),
+const SizedBox(height: 6),
+TextField(
+  controller: confirmPasswordController,
+  obscureText: _obscureConfirmPassword, // اس کا اپنا الگ ویری ایبل ہے
+  decoration: InputDecoration(
+    hintText: '••••••••••••',
+    prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF94A3B8), size: 20),
+    suffixIcon: IconButton(
+      icon: Icon(_obscureConfirmPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
+      onPressed: () {
+        setState(() {
+          _obscureConfirmPassword = !_obscureConfirmPassword; // صرف اسی فیلڈ کا پاسورڈ شو/ہائیڈ ہوگا
+        });
+      },
+    ),
+    border: const OutlineInputBorder(),
+  ),
+),
                             const SizedBox(height: 16),
                             Text(isUrdu ? 'بچے کا نام' : "Child's Name", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF64748B))),
                             const SizedBox(height: 6),

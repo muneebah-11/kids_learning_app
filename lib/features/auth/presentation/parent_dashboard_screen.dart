@@ -111,6 +111,10 @@ class _ParentDashboardScreenState extends State<ParentDashboardScreen> {
     }
 
     return Scaffold(
+      body: Center(                 
+    child: ConstrainedBox(     
+      constraints: const BoxConstraints(maxWidth: 430),
+      child: Scaffold(
       backgroundColor: const Color(0xFFFBF9F3),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
@@ -130,12 +134,14 @@ class _ParentDashboardScreenState extends State<ParentDashboardScreen> {
                 child: const Icon(Icons.star, color: Colors.white, size: 18),
               ),
               const SizedBox(width: 8),
-              Column(
+              Expanded(
+      child: Column(
+              
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'WonderKids Parent Hub',
+                    'WonderKids  Hub',
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -151,6 +157,7 @@ class _ParentDashboardScreenState extends State<ParentDashboardScreen> {
                     ),
                   ),
                 ],
+              ),
               ),
             ],
           ),
@@ -263,7 +270,11 @@ class _ParentDashboardScreenState extends State<ParentDashboardScreen> {
           ),
         ],
       ),
+      ),
+    ),
+      ),
     );
+    
   }
 
   // --- 1. Dashboard Tab ---
